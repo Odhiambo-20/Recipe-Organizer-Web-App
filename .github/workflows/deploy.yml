@@ -57,7 +57,8 @@ jobs:
       run: npx eslint . --ext .js || true
     
     - name: Run WAVE accessibility check
-      run: echo "Note: In a production environment, you would integrate with the WAVE API for accessibility testing"
+      run: >-
+        echo "Note: In a production environment, you would integrate with the WAVE API for accessibility testing"
     
     - name: Deploy to GitHub Pages
       if: github.ref == 'refs/heads/main'
