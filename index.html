@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Organizer</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+
+</head>
+<body>
+    <header>
+        <h1>Recipe Organizer</h1>
+        <div class="user-controls">
+            <button id="login-btn"><i class="fas fa-fingerprint"></i> Biometric Login</button>
+            <button id="chat-btn"><i class="fas fa-robot"></i> Chat Assistant</button>
+        </div>
+    </header>
+
+    <main>
+        <section class="sidebar">
+            <div class="filter-container">
+                <h2>Filters</h2>
+                <div class="filter-group">
+                    <label for="category-filter">Category:</label>
+                    <select id="category-filter">
+                        <option value="all">All Categories</option>
+                        <option value="breakfast">Breakfast</option>
+                        <option value="lunch">Lunch</option>
+                        <option value="dinner">Dinner</option>
+                        <option value="dessert">Dessert</option>
+                        <option value="snack">Snack</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="ingredient-filter">Ingredient:</label>
+                    <input type="text" id="ingredient-filter" placeholder="Filter by ingredient">
+                </div>
+                <button id="clear-filters-btn">Clear Filters</button>
+            </div>
+        </section>
+
+        <section class="content">
+            <div class="add-recipe-container">
+                <h2>Add New Recipe</h2>
+                <form id="recipe-form">
+                    <div class="form-group">
+                        <label for="recipe-name">Recipe Name:</label>
+                        <input type="text" id="recipe-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="recipe-category">Category:</label>
+                        <select id="recipe-category" required>
+                            <option value="breakfast">Breakfast</option>
+                            <option value="lunch">Lunch</option>
+                            <option value="dinner">Dinner</option>
+                            <option value="dessert">Dessert</option>
+                            <option value="snack">Snack</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="recipe-ingredients">Ingredients (one per line):</label>
+                        <textarea id="recipe-ingredients" rows="5" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="recipe-instructions">Instructions:</label>
+                        <textarea id="recipe-instructions" rows="5" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="recipe-preptime">Preparation Time (minutes):</label>
+                        <input type="number" id="recipe-preptime" min="1" required>
+                    </div>
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="recipe-favorite">
+                        <label for="recipe-favorite">Mark as Favorite</label>
+                    </div>
+                    <button type="submit">Add Recipe</button>
+                </form>
+            </div>
+
+            <div class="recipe-list-container">
+                <h2>My Recipes</h2>
+                <div id="recipe-list"></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Edit Recipe Modal -->
+    <div id="edit-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Edit Recipe</h2>
+            <form id="edit-recipe-form">
+                <input type="hidden" id="edit-recipe-id">
+                <div class="form-group">
+                    <label for="edit-recipe-name">Recipe Name:</label>
+                    <input type="text" id="edit-recipe-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-recipe-category">Category:</label>
+                    <select id="edit-recipe-category" required>
+                        <option value="breakfast">Breakfast</option>
+                        <option value="lunch">Lunch</option>
+                        <option value="dinner">Dinner</option>
+                        <option value="dessert">Dessert</option>
+                        <option value="snack">Snack</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="edit-recipe-ingredients">Ingredients (one per line):</label>
+                    <textarea id="edit-recipe-ingredients" rows="5" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="edit-recipe-instructions">Instructions:</label>
+                    <textarea id="edit-recipe-instructions" rows="5" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="edit-recipe-preptime">Preparation Time (minutes):</label>
+                    <input type="number" id="edit-recipe-preptime" min="1" required>
+                </div>
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="edit-recipe-favorite">
+                    <label for="edit-recipe-favorite">Mark as Favorite</label>
+                </div>
+                <button type="submit">Update Recipe</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Chat Assistant Modal -->
+    <div id="chat-modal" class="modal">
+        <div class="modal-content chat-modal-content">
+            <span class="close">&times;</span>
+            <h2>Recipe Assistant</h2>
+            <div id="chat-messages"></div>
+            <div class="chat-input-container">
+                <input type="text" id="chat-input" placeholder="Ask about recipes or how to use the app...">
+                <button id="send-chat-btn">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Recipe Organizer - Created for Web Development Assignment</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
